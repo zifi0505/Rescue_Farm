@@ -33,7 +33,7 @@ bg_x2 = screen_width  # posición inicial del segundo fondo
 # Velocidad del fondo
 bg_speed = 2
 
-# Cargar la imagen del botón "Regresar"
+# Cargar la imagen del botón "Regresar."
 back_button_image = pygame.image.load("imagenes/atras+.png")
 back_button_image = pygame.transform.scale(back_button_image, (100, 100))  # Ajustar según necesites
 
