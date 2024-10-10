@@ -13,7 +13,9 @@ pygame.display.set_caption("RESCUE FARM")
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 CAFE = (139, 69, 19)
-HIGHLIGHT_COLOR = (255, 223, 0)#Color para resaltar los botones
+HIGHLIGHT_VERDE = (0, 255, 0)#Color para resaltar en verde
+HIGHLIGHT_AMARILLO =(255, 255,  0)#Color para resaltar en  amarillo
+
 
 # Fuente estilo 8 bits (debes descargar la fuente y colocarla en la misma carpeta)
 font_8bit = pygame.font.Font("fuentes/PressStart2P-Regular.ttf", 30)
@@ -52,6 +54,7 @@ state = MENU
 # Botones
 button_width, button_height = 300, 50
 
+
 # Función para dibujar texto centrado
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(text, True, color)
@@ -89,7 +92,7 @@ while running:
         
         #iluminacion de boton jugar    
         if play_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, play_button, border_radius=15)  # Borde iluminado
+            pygame.draw.rect(screen, HIGHLIGHT_VERDE, play_button, border_radius=15)  # Borde iluminado
         else:
             pygame.draw.rect(screen, CAFE, play_button, border_radius=15)
             
@@ -115,13 +118,13 @@ while running:
     
     # Iluminar el  botón "Fácil"
         if easy_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, easy_button, border_radius=15)
+            pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, easy_button, border_radius=15)
         else:
             pygame.draw.rect(screen, CAFE, easy_button, border_radius=15)
         
         # Iluminar el botón "Avanzado"
         if hard_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, hard_button, border_radius=15)
+            pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, hard_button, border_radius=15)
         else:
             pygame.draw.rect(screen, CAFE, hard_button, border_radius=15)
         draw_text('FACIL', font_8bit, WHITE, screen, screen_width // 2, 275)
@@ -158,17 +161,17 @@ while running:
         back_button = pygame.Rect(25, 500, button_width, button_height)
 
         if level1_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, level1_button, border_radius=15)
+            pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, level1_button, border_radius=15)
         else:
             pygame.draw.rect(screen, CAFE, level1_button, border_radius=15)
 
         if level2_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, level2_button, border_radius=15)
+            pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, level2_button, border_radius=15)
         else:
             pygame.draw.rect(screen, CAFE, level2_button, border_radius=15)
 
         if level3_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, level3_button, border_radius=15)
+            pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, level3_button, border_radius=15)
         else:
             pygame.draw.rect(screen, CAFE, level3_button, border_radius=15)
     
