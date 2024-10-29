@@ -19,36 +19,21 @@ def run_game():
 
     CAFE = (139, 69, 19)
 
-    Letra_A = pygame.image.load("Letras/A.png")      
-    Letra_A = pygame.transform.scale(Letra_A, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_B = pygame.image.load("Letras/B.png")
-    Letra_B = pygame.transform.scale(Letra_B, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_C = pygame.image.load("Letras/C.png")
-    Letra_C = pygame.transform.scale(Letra_C, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_D = pygame.image.load("Letras/D.png")
-    Letra_D = pygame.transform.scale(Letra_A, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_E = pygame.image.load("Letras/E.png")
-    Letra_E = pygame.transform.scale(Letra_E, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_G = pygame.image.load("Letras/G.png")
-    Letra_G = pygame.transform.scale(Letra_G, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_H = pygame.image.load("Letras/H.png")
-    Letra_H = pygame.transform.scale(Letra_H, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_I = pygame.image.load("Letras/I.png")
-    Letra_I = pygame.transform.scale(Letra_I, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_J = pygame.image.load("Letras/J.png")
-    Letra_J = pygame.transform.scale(Letra_J, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_K = pygame.image.load("Letras/K.png")
-    Letra_K = pygame.transform.scale(Letra_K, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_L = pygame.image.load("Letras/L.png")
-    Letra_L = pygame.transform.scale(Letra_L, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_M = pygame.image.load("Letras/M.png")
-    Letra_M = pygame.transform.scale(Letra_M, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_N = pygame.image.load("Letras/N.png")
-    Letra_N = pygame.transform.scale(Letra_N, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_O = pygame.image.load("Letras/O.png")
-    Letra_O = pygame.transform.scale(Letra_O, (LetrasEscala_X, LetrasEscala_Y))
-    Letra_P = pygame.image.load("Letras/P.png")
-    Letra_P = pygame.transform.scale(Letra_P, (LetrasEscala_X, LetrasEscala_Y))
+    Letra_A = pygame.transform.scale(pygame.image.load("Letras/A.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_B = pygame.transform.scale(pygame.image.load("Letras/B.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_C = pygame.transform.scale(pygame.image.load("Letras/C.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_D = pygame.transform.scale(pygame.image.load("Letras/D.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_E = pygame.transform.scale(pygame.image.load("Letras/E.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_G = pygame.transform.scale(pygame.image.load("Letras/G.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_H = pygame.transform.scale(pygame.image.load("Letras/H.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_I = pygame.transform.scale(pygame.image.load("Letras/I.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_J = pygame.transform.scale(pygame.image.load("Letras/J.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_K = pygame.transform.scale(pygame.image.load("Letras/K.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_L = pygame.transform.scale(pygame.image.load("Letras/L.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_M = pygame.transform.scale(pygame.image.load("Letras/M.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_N = pygame.transform.scale(pygame.image.load("Letras/N.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_O = pygame.transform.scale(pygame.image.load("Letras/O.png"), (LetrasEscala_X, LetrasEscala_Y))
+    Letra_P = pygame.transform.scale(pygame.image.load("Letras/P.png"), (LetrasEscala_X, LetrasEscala_Y))
     Letra_V = pygame.transform.scale(pygame.image.load("Letras/V-19-10-2024.png"), (LetrasEscala_X, LetrasEscala_Y))
 
     AInt = 0
@@ -129,6 +114,7 @@ def run_game():
     Last_O_Time = pygame.time.get_ticks()
 
     # Guardar el tiempo inicial
+    
     start_ticks = pygame.time.get_ticks()  # Captura el tiempo de inicio
 
     font_8bit = pygame.font.Font("fuentes/PressStart2P-Regular.ttf", 17)
@@ -203,7 +189,7 @@ def run_game():
                         menu.Menu_Run()
 
 
-
+        
         if Status == "Game":
             # Mover el jugador con las teclas de flecha
 
