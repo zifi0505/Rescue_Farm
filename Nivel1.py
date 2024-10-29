@@ -1,4 +1,4 @@
-import pygame, sys, menu
+import pygame, sys, menu, random
 
 def run_game():
     # Inicializar Pygame
@@ -13,22 +13,47 @@ def run_game():
     player_image = pygame.image.load("personajes/Boy.2.png")
     Oveja_image = pygame.image.load("imagenes/animales/Oveja.png")
 
-    Letra_A = pygame.image.load("Letras/A.png")      
-    Letra_B = pygame.image.load("Letras/B.png")
-    Letra_C = pygame.image.load("Letras/C.png")
-    Letra_D = pygame.image.load("Letras/D.png")
-    Letra_E = pygame.image.load("Letras/E.png")
-    Letra_G = pygame.image.load("Letras/G.png")
-    Letra_H = pygame.image.load("Letras/H.png")
-    Letra_I = pygame.image.load("Letras/I.png")
-    Letra_J = pygame.image.load("Letras/J.png")
-    Letra_K = pygame.image.load("Letras/K.png")
-    Letra_L = pygame.image.load("Letras/L.png")
-    Letra_M = pygame.image.load("Letras/M.png")
-    Letra_N = pygame.image.load("Letras/N.png")
-    Letra_O = pygame.image.load("Letras/O.png")
-    Letra_P = pygame.image.load("Letras/P.png")
+    # Escala de las letras
 
+    X_LetrasEscala = 32
+    Y_LetrasEscala = 32
+
+    #Declarar letras y escala
+
+
+    Letra_A = pygame.image.load("Letras/A-6-10-2024.png") 
+    Letra_A = pygame.transform.scale(Letra_A, (X_LetrasEscala, Y_LetrasEscala))     
+    Letra_B = pygame.image.load("Letras/B.png")
+    Letra_B = pygame.transform.scale(Letra_B, (X_LetrasEscala, Y_LetrasEscala))     
+    Letra_C = pygame.image.load("Letras/C.png")
+    Letra_C = pygame.transform.scale(Letra_C, (X_LetrasEscala, Y_LetrasEscala))         
+    Letra_D = pygame.image.load("Letras/D.png")
+    Letra_D = pygame.transform.scale(Letra_D, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_E = pygame.image.load("Letras/E.png")
+    Letra_E = pygame.transform.scale(Letra_E, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_G = pygame.image.load("Letras/G.png")
+    Letra_G = pygame.transform.scale(Letra_G, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_H = pygame.image.load("Letras/H.png")
+    Letra_H = pygame.transform.scale(Letra_H, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_I = pygame.image.load("Letras/I.png")
+    Letra_I = pygame.transform.scale(Letra_I, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_J = pygame.image.load("Letras/J.png")
+    Letra_J = pygame.transform.scale(Letra_J, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_K = pygame.image.load("Letras/K.png")
+    Letra_K = pygame.transform.scale(Letra_K, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_L = pygame.image.load("Letras/L.png")
+    Letra_L = pygame.transform.scale(Letra_L, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_M = pygame.image.load("Letras/M.png")
+    Letra_M = pygame.transform.scale(Letra_M, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_N = pygame.image.load("Letras/N.png")
+    Letra_N = pygame.transform.scale(Letra_N, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_O = pygame.image.load("Letras/O.png")
+    Letra_O = pygame.transform.scale(Letra_O, (X_LetrasEscala, Y_LetrasEscala)) 
+    Letra_P = pygame.image.load("Letras/P.png")
+    Letra_P = pygame.transform.scale(Letra_P, (X_LetrasEscala, Y_LetrasEscala))
+    Letra_S = pygame.transform.scale(pygame.image.load("Letras/S.jpg"), (X_LetrasEscala, Y_LetrasEscala))
+
+    AllLetters = [Letra_A, Letra_B, Letra_C, Letra_D, Letra_E, Letra_G, Letra_H, Letra_I, Letra_J, Letra_K, Letra_L, Letra_M, Letra_N, Letra_O, Letra_P, Letra_S]
 
     farmer_image = pygame.image.load("imagenes/Granjero (2).png")
     game_over_image = pygame.image.load("imagenes/gameOver.png")
@@ -39,7 +64,23 @@ def run_game():
     player_pos = [400, 535]
 
     # Lista para almacenar las ovejas
-    targets = []
+    ATargets = []
+    BTargets = []
+    CTargets = []
+    DTargets = []   
+    ETargets = []
+    GTargets = []
+    HTargets = []
+    ITargets = []
+    JTargets = []
+    KTargets = []
+    LTargets = []
+    MTargets = []
+    PTargets = []
+    STargets = []
+    VTargets = []
+
+    AllLettersTarget = ATargets, BTargets, CTargets, DTargets, ETargets, GTargets, HTargets, ITargets, JTargets, KTargets, LTargets, MTargets, PTargets, STargets, VTargets
 
     # Función para comprobar colisión
     def check_collision(pos1, size1, pos2, size2):
@@ -65,6 +106,25 @@ def run_game():
 
     # Vida
     Life = 3
+    # Letras (Esto solo declara letras como int para hacer que el jugador gane)
+
+    AInt = 0
+    BInt = 0
+    CInt = 0
+    DInt = 0
+    EInt = 0
+    GInt = 0
+    HInt = 0
+    IInt = 0
+    JInt = 0
+    KInt = 0
+    LInt = 0
+    MInt = 0
+    NInt = 0
+    OInt = 0
+    PInt = 0
+    SInt = 0
+    VInt = 0
 
     # Tiempo de la última caída
     last_sheep_time = pygame.time.get_ticks()
@@ -98,19 +158,20 @@ def run_game():
 
         # Comprobar colisiones
         player_size = player_image.get_size()
-        Oveja_size = Oveja_image.get_size()
-
         # Verificar colisión entre jugador y ovejas
-        for target in targets[:]:  # [:] para hacer una copia de la lista mientras iteramos
-            if check_collision(player_pos, player_size, target[:2], Oveja_size):
+        for target in AllLetters[:]:  # [:] para hacer una copia de la lista mientras iteramos
+            if check_collision(player_pos, player_size, target[:2], Letra_A.get_size()):
+                AInt += 1
                 score += 1
-                targets.remove(target)  # Eliminar oveja después de la colisión
+                AllLetters.remove(target)  # Eliminar oveja después de la colisión
 
         # Mover las ovejas hacia abajo
-        for target in targets:
+        for target in random.randint(AllLettersTarget):
             target[1] += 5 # Caída de las ovejas (puedes ajustar la velocidad aquí)
             if target[1] == 590:
                 Life -= 1
+
+        
 
 
 
@@ -118,7 +179,7 @@ def run_game():
         current_time = pygame.time.get_ticks()
         if current_time - last_sheep_time > 2000:  # Cada 2 segundos
             x = farmer_pos[0] + farmer_image.get_width() // 2  # Posición del granjero
-            targets.append([x, farmer_pos[1], True])  # Crear nueva oveja en la posición del granjero
+            AllLettersTarget.append([x, farmer_pos[1], True])  # Crear nueva oveja en la posición del granjero
             last_sheep_time = current_time  # Reiniciar el temporizador
 
         
@@ -156,34 +217,30 @@ def run_game():
         if Life >= 1:
             screen.blit(pygame.image.load("imagenes/CorazonDeVida.png"), (290, 50))
 
-
-
         # Dibujar ovejas
-        for target in targets:
-            screen.blit(Oveja_image, target[:2])  # Dibuja la oveja en su posición actual
+        for target in ATargets:
+            screen.blit(Letra_A, target[:2])  # Dibuja la oveja en su posición actual
+        for target_2 in ATargets:
+            screen.blit(Letra_B, target_2[:2])  # Dibuja la oveja en su posición actual
+
+    
+        
+        if VInt >= 1:
+            screen.blit(pygame.transform.scale   (pygame.image.load("Letras\A-6-10-2024.png"), (32, 33)), (440, 30))
+        if OInt >= 1:
+            screen.blit(pygame.transform.scale   (pygame.image.load("Letras\A-6-10-2024.png"), (32, 33)), (470, 30))
+        if JInt >= 1:
+            screen.blit(pygame.transform.scale   (pygame.image.load("Letras\A-6-10-2024.png"), (32, 33)), (470, 30))
+        if EInt >= 1:
+            screen.blit(pygame.transform.scale   (pygame.image.load("Letras\C-6-10-2024.png"), (32, 33)), (530, 30))
+        if AInt >= 1:
+            screen.blit(pygame.transform.scale   (pygame.image.load("Letras\A-6-10-2024.png"), (32, 33)), (560, 30))
 
         # Mostrar puntaje y tiempo
         score_surface = font.render(f'Score: {score}', True, (255, 255, 255))
         time_surface = font.render(f'Time: {int(Timecounter)}', True, (255, 255, 255))
-        life_surface = font.render(f'Lifes: {int(Life)}', True, (255, 255, 255))
-        screen.blit(score_surface, (100, 50))  # Ajustar posición de puntaje
+        screen.blit(score_surface, (870, 57))  # Ajustar posición de puntaje
         screen.blit(time_surface, (870, 20))   # Ajustar posición de tiempo
-        screen.blit(life_surface, (100, 80))
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)
-
-    # Mostrar imagen de resultado
-
-    
-
-    if score >= 10:
-        screen.blit(win_image, (0, 0))  # Muestra la imagen de ganar
-        menu.Menu_Run
-    else: 
-        screen.blit(game_over_image, (0, 0))  # Muestra la imagen de Game Over
-    
-        pygame.display.flip()
-        pygame.time.wait(3000)  # Esperar 3 segundos antes de salir
-
-        menu.Menu_Run()
