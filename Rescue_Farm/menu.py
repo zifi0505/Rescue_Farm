@@ -1,4 +1,4 @@
-import pygame, sys, Nivel1
+import pygame, sys, Nivel1, credits
 # Inicializar Pygame
 
 # Tamaño de pantalla
@@ -26,6 +26,7 @@ def Menu_Run():
     # Cargar la imagen del fondo
     background_image = pygame.image.load("imagenes/fondmenu.png")
     background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
+    Title = pygame.transform.scale(pygame.image.load("Title.png"), (500, 100))
 
     # Movimiento del fondo
     bg_x1 = 0  # posición inicial del primer fondo
@@ -39,15 +40,16 @@ def Menu_Run():
     back_button_image = pygame.transform.scale(back_button_image, (100, 100))  # Ajustar según necesites
 
     # SONIDO DEL MENU
-    pygame.mixer.music.load("MUSICA/musicmenu.ogg")
-    pygame.mixer.music.play(-1)
+    #pygame.mixer.music.load("MUSICA/musicmenu.ogg")
+    #pygame.mixer.music.play(-1)
     button_click_sound = pygame.mixer.Sound("MUSICA/botonPress.mp3")
 
 
     # Estados del juego
     MENU = "menu"
-    DIFFICULTY = "difficulty"
+    Credits = "credits"
     LEVEL = "level"
+    Language = "Spanish"
     state = MENU
 
     # Botones
@@ -80,23 +82,40 @@ def Menu_Run():
         if bg_x2 <= -screen_width:
             bg_x2 = screen_width
 
-        mouse_pos = pygame.mouse.get_pos()
+        mouse_pos = pygame.mouse.get_pos()                  
 
         if state == MENU:
             # Dibujar el título del menú
-            draw_text('RESCUE FARM', font_8bit, BLACK, screen, screen_width // 2, 100)
+
+            screen.blit(Title, (250, 100))
+
             
             # Dibujar el botón "Jugar"
             play_button = pygame.Rect(screen_width // 2 - button_width // 2, 250, button_width, button_height)
             pygame.draw.rect(screen, CAFE, play_button, border_radius=15)
+
+            LanguageButton = pygame.Rect(screen_width // 2 - button_width // 2, 312.5, button_width, button_height)
+            pygame.draw.rect(screen, CAFE, LanguageButton, border_radius=15)
+
+            credits_button = pygame.Rect(screen_width // 2 - button_width // 2, 375, button_width, button_height)
+            pygame.draw.rect(screen, CAFE, credits_button, border_radius=15)
             
             #iluminacion de boton jugar    
             if play_button.collidepoint(mouse_pos):
                 pygame.draw.rect(screen, HIGHLIGHT_VERDE, play_button, border_radius=15)  # Borde iluminado
             else:
                 pygame.draw.rect(screen, CAFE, play_button, border_radius=15)
-                
-            draw_text('JUGAR', font_8bit, WHITE, screen, screen_width // 2, 275)
+
+
+
+            if Language == "Spanish":
+                draw_text('JUGAR', font_8bit, WHITE, screen, screen_width // 2, 275)
+                draw_text('ESPAÑOL', font_8bit, WHITE, screen, screen_width // 2, 337.5)
+                draw_text('CREDITOS', font_8bit, WHITE, screen, screen_width // 2, 400)
+            else:
+                draw_text('PLAY', font_8bit, WHITE, screen, screen_width // 2, 275)
+                draw_text('ENGLISH', font_8bit, WHITE, screen, screen_width // 2, 337.5)
+                draw_text('CREDITS', font_8bit, WHITE, screen, screen_width // 2, 400) 
 
             # Detección de clic en el botón
         
@@ -108,32 +127,18 @@ def Menu_Run():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.collidepoint(event.pos):
                         button_click_sound.play() #reproduce el sonido de click del boton jugar
-                        state = DIFFICULTY
-
-        elif state == DIFFICULTY:
-            # Mostrar selección de dificultad
-            draw_text('SELECCIONA DIFICULTAD', font_8bit, BLACK, screen, screen_width // 2, 100)
-
-            easy_button = pygame.Rect(screen_width // 2 - button_width // 2, 250, button_width, button_height)
-            hard_button = pygame.Rect(screen_width // 2 - button_width // 2, 350, button_width, button_height)
-            back_button = pygame.Rect(25, 500, 100, 100)  # Posición y tamaño del botón "Regresar"
+                        state = LEVEL
+                    if LanguageButton.collidepoint(event.pos):
+                        button_click_sound.play()
+                        if Language == "Spanish":
+                            Language = "English"
+                        else:
+                            Language = "Spanish"
+                    if credits_button.collidepoint(mouse_pos):
+                        credits.creditsWall()
         
-        # Iluminar el  botón "Fácil"
-            if easy_button.collidepoint(mouse_pos):
-                pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, easy_button, border_radius=15)
-            else:
-                pygame.draw.rect(screen, CAFE, easy_button, border_radius=15)
-            
-            # Iluminar el botón "Avanzado"
-            if hard_button.collidepoint(mouse_pos):
-                pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, hard_button, border_radius=15)
-            else:
-                pygame.draw.rect(screen, CAFE, hard_button, border_radius=15)
-            draw_text('FACIL', font_8bit, WHITE, screen, screen_width // 2, 275)
-            draw_text('AVANZADO', font_8bit, WHITE, screen, screen_width // 2, 375)
 
-            # Dibujar la imagen del botón "Regresar"
-            screen.blit(back_button_image, (25, 500))
+  
 
             # Detectar clic de dificultad
             for event in pygame.event.get():
@@ -141,26 +146,23 @@ def Menu_Run():
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if easy_button.collidepoint(event.pos):
-                        button_click_sound.play()
-                        difficulty = "facil"
-                        state = LEVEL
-                    elif hard_button.collidepoint(event.pos):
-                        button_click_sound.play()
-                        difficulty = "avanzado"
-                        state = LEVEL
-                    elif back_button.collidepoint(event.pos):
+                    if back_button.collidepoint(event.pos):
                         button_click_sound.play()
                         state = MENU  # Regresar al menú principal
 
         elif state == LEVEL:
-            # Mostrar selección de niveles
-            draw_text('SELECCIONA UN NIVEL', font_8bit, BLACK, screen, screen_width // 2, 100)
+            # Mostrar selección de nivele
+            if Language == "Spanish":
+                draw_text('SELECCIONA UN NIVEL', font_8bit, BLACK, screen, screen_width // 2, 100)
+            else:
+                draw_text('SELECT A LEVEL', font_8bit, BLACK, screen, screen_width // 2, 100)
 
             level1_button = pygame.Rect(screen_width // 2 - button_width // 2, 200, button_width, button_height)
             level2_button = pygame.Rect(screen_width // 2 - button_width // 2, 300, button_width, button_height)
             level3_button = pygame.Rect(screen_width // 2 - button_width // 2, 400, button_width, button_height)
             back_button = pygame.Rect(25, 500, button_width, button_height)
+
+ 
 
             if level1_button.collidepoint(mouse_pos):
                 pygame.draw.rect(screen, HIGHLIGHT_AMARILLO, level1_button, border_radius=15)
@@ -181,14 +183,20 @@ def Menu_Run():
             
             # Dibujar la imagen del botón "Regresar"
             screen.blit(back_button_image, (50, 500))
-            draw_text('NIVEL 1', font_8bit, WHITE, screen, screen_width // 2, 225)
-            draw_text('NIVEL 2', font_8bit, WHITE, screen, screen_width // 2, 325)
-            draw_text('NIVEL 3', font_8bit, WHITE, screen, screen_width // 2, 425)
+            if Language == "Spanish":
+                draw_text('NIVEL 1', font_8bit, WHITE, screen, screen_width // 2, 225)
+                draw_text('NIVEL 2', font_8bit, WHITE, screen, screen_width // 2, 325)
+                draw_text('NIVEL 3', font_8bit, WHITE, screen, screen_width // 2, 425)
+            else:
+                draw_text('LEVEL 1', font_8bit, WHITE, screen, screen_width // 2, 225)
+                draw_text('LEVEL 2', font_8bit, WHITE, screen, screen_width // 2, 325)
+                draw_text('LEVEL 3', font_8bit, WHITE, screen, screen_width // 2, 425)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if level1_button.collidepoint(event.pos):
                         button_click_sound.play()
@@ -196,6 +204,7 @@ def Menu_Run():
                         Nivel1.run_game()  # Ejecuta el juego principal al seleccionar el nivel 1
                         pygame.quit()    # Cierra el menú después de iniciar el juego
                         sys.exit()
+
                     elif level2_button.collidepoint(event.pos):
                         button_click_sound.play()
                         print(f"Nivel 2 seleccionado en dificultad {difficulty}")
@@ -205,7 +214,7 @@ def Menu_Run():
                     elif back_button.collidepoint(event.pos):
                         button_click_sound.play()
                     if state == LEVEL:
-                        state = DIFFICULTY  # Regresar a la selección de dificultad
+                        state = MENU  # Regresar a la selección de dificultad
                 
         pygame.display.flip()
         pygame.time.Clock().tick(60)
