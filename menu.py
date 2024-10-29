@@ -199,9 +199,11 @@ def Menu_Run():
                         sys.exit()
                     elif level2_button.collidepoint(event.pos):
                         button_click_sound.play()
+                        Nivel1.run_game()
                         print(f"Nivel 2 seleccionado en dificultad {difficulty}")
                     elif level3_button.collidepoint(event.pos):
                         button_click_sound.play()
+                        Nivel1.run_game()
                         print(f"Nivel 3 seleccionado en dificultad {difficulty}")
                     elif back_button.collidepoint(event.pos):
                         button_click_sound.play()
