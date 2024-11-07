@@ -1,6 +1,13 @@
 import pygame, sys, menu, random
+from pyvidplayer import Video
 
-def run_game():
+video = Video("Videos/FARM RESCUE.mp4")
+video.set_size((640, 480))
+
+pygame.quit()
+
+
+def run_game(ScreenStatus, CharacterChoosen, LanguageSelected):
     # Inicializar Pygame
     pygame.init()
 
@@ -9,7 +16,7 @@ def run_game():
     pygame.display.set_caption("Colisión de Imágenes Aleatorias")
 
     # Cargar imágenes
-    Mapa_Nivel1 = pygame.image.load("Mapa.png")
+    Mapa_Nivel1 = pygame.image.load("imagenes/Livel1Map.png")
     Player_male = pygame.transform.scale(pygame.image.load("personajes/Boy.2.png"), (70, 70))
     Player_Female = pygame.transform.scale(pygame.image.load("personajes/1WOMAN.png"), (70, 70))
     Oveja_image = pygame.image.load("imagenes/animales/Oveja.png")
@@ -54,6 +61,7 @@ def run_game():
     SInt = 0
     VInt = 0
 
+    
 
     farmer_image = pygame.image.load("imagenes/Granjero (2).png")
     game_over_image = pygame.image.load("imagenes/Perder 8.png")
@@ -86,8 +94,10 @@ def run_game():
 
 
     # Bucle principal
-    Character = ""
-    Status = "Characters"
+    Character = CharacterChoosen
+    StatusScreen = ScreenStatus
+    Status = ""
+    Language = LanguageSelected
     score = 0
     Timecounter = 40  # Tiempo inicial
     running = True
@@ -114,7 +124,6 @@ def run_game():
     Last_O_Time = pygame.time.get_ticks()
 
     # Guardar el tiempo inicial
-    
     start_ticks = pygame.time.get_ticks()  # Captura el tiempo de inicio
 
     font_8bit = pygame.font.Font("fuentes/PressStart2P-Regular.ttf", 17)
@@ -130,7 +139,7 @@ def run_game():
 
     while running:
     
-        if Status == "Characters":
+        if StatusScreen == "Characters":
             screen.blit(pygame.transform.scale(pygame.image.load("imagenes/fondmenu.png"), (1000, 600)), (0, 0))
             pygame.draw.rect(screen, CAFE, pygame.Rect(200, 50, 600, 500), border_radius=15)
 
@@ -143,7 +152,6 @@ def run_game():
 
             MaleCharacterButton = pygame.Rect(375, 250, 100, 100)
             pygame.draw.rect(screen, ((63, 31, 8)), MaleCharacterButton, border_radius=15)
-
 
 
             if MaleCharacterButton.collidepoint(mouse_pos):
@@ -162,8 +170,10 @@ def run_game():
             screen.blit(back_button_image, (25, 500))
 
             pygame.draw.rect(screen, (63, 31, 8), pygame.Rect(300, 175, 400, 50), border_radius=15)
-            draw_text('SELECT YOUT CHARACTER', font_8bit, (255, 255, 255), screen, 500, 200)
-
+            if Language == "English":
+                draw_text('SELECT YOUT CHARACTER', font_8bit, (255, 255, 255), screen, 500, 200)
+            else:
+                draw_text('SELECCIONA TU CARACTER', font_8bit, (255, 255, 255), screen, 500, 200)
             
 
             pygame.display.flip()
@@ -177,28 +187,30 @@ def run_game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if FemaleCharacterButton.collidepoint(event.pos):
                         Character = "Female"
-                        Status = "Game"
+                        StatusScreen = "Game"
                         print("Character has been choosen", Character)
 
                     if MaleCharacterButton.collidepoint(event.pos):
                         Character = "Male"
-                        Status = "Game"
+                        StatusScreen = "Game"
                         print("Character has been choosen", Character)
 
                     if back_button.collidepoint(event.pos):
-                        menu.Menu_Run()
+                        menu.Menu_Run(LanguageSelected=Language)
 
 
-        
-        if Status == "Game":
+
+        if StatusScreen == "Game":
             # Mover el jugador con las teclas de flecha
 
-            if PauseValue == False:
+            if PauseValue == False and not Status == "Winner" and not Status == "Lose":
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_LEFT] and player_pos[0] > 280:
                     player_pos[0] -= 5
-                if keys[pygame.K_RIGHT] and player_pos[0] < 805:
+                if keys[pygame.K_RIGHT] and player_pos[0] < 670:
                     player_pos[0] += 5
+
+
                 if keys[pygame.K_UP]:
                     player_pos[1] = 535  # Resetear la posición vertical del jugador
 
@@ -206,7 +218,7 @@ def run_game():
 
 
             # Movimiento del granjero
-            if PauseValue == False:
+            if PauseValue == False and not Status == "Winner" and not Status == "Lose":
                 farmer_pos[0] += farmer_direction * farmer_speed
 
 
@@ -228,41 +240,41 @@ def run_game():
                 if check_collision(player_pos, player_size, target[:2], Letra_V_Size):
                     score += 1
                     AInt += 1
-                    if AInt >= 3:
+                    if AInt > 1:
                         Life -= 1
                     Atargets.remove(target)  # Eliminar oveja después de la colisión
             for target in Vtargets[:]:  # [:] para hacer una copia de la lista mientras iteramos
                 if check_collision(player_pos, player_size, target[:2], Letra_V_Size):
                     score += 1
                     VInt += 1
-                    if VInt >= 2:
+                    if VInt > 1:
                         Life -= 1
                     Vtargets.remove(target)
             for target in Etargets[:]:  # [:] para hacer una copia de la lista mientras iteramos
                 if check_collision(player_pos, player_size, target[:2], Letra_E_Size):
                     score += 1
                     EInt += 1
-                    if EInt >= 2:
+                    if EInt > 1:
                         Life -= 1
                     Etargets.remove(target)
             for target in Jtargets[:]:  # [:] para hacer una copia de la lista mientras iteramos
                 if check_collision(player_pos, player_size, target[:2], Letra_J_Size):
                     score += 1
                     JInt += 1
-                    if JInt >= 2:
+                    if JInt > 1:
                         Life -= 1
                     Jtargets.remove(target)
             for target in Otargets[:]:  # [:] para hacer una copia de la lista mientras iteramos
                 if check_collision(player_pos, player_size, target[:2], Letra_O_Size):
                     score += 1
                     OInt += 1
-                    if OInt >= 2:
+                    if OInt > 1:
                         Life -= 1
                     Otargets.remove(target)
             
             
             # Movel las letras hacia abajo
-            if PauseValue == False:
+            if PauseValue == False and not Status == "Winner" and not Status == "Lose":
                 for target in Atargets:
                     target[1] += VelocidadDeCaida #Velocidad
                 for target in Otargets:
@@ -283,8 +295,7 @@ def run_game():
 
 
             # Caída de ovejas (generación de nuevas ovejas cada 2 segundos)
-
-            if PauseValue == False:
+            if PauseValue == False and not Status == "Winner" and not Status == "Lose":
                 current_time = pygame.time.get_ticks()
                 if current_time - Last_A_Time > 1400:  # Cada 2 segundos
                     x = farmer_pos[0] + farmer_image.get_width() // 2  # Posición del granjero
@@ -311,26 +322,24 @@ def run_game():
 
 
             # Actualizar el tiempo
-            if PauseValue == False and Status == "Game":
+            if PauseValue == False and not Status == "Winner" or not Status == "Lose" and ScreenStatus == "Gamew":
                 seconds = (pygame.time.get_ticks() - start_ticks) / 1000  # Tiempo en segundos
-                Timecounter = 30 - seconds  # Calcular el tiempo restante
+                Timecounter = 30  # Calcular el tiempo restante
+                Timecounter -= seconds
 
             # Comprobar condiciones de finalización
-            if AInt < 1 and VInt < 1 and JInt < 1 and EInt < 1 and OInt < 1 and Timecounter <= 0 or Life == 0:
-                screen.blit(game_over_image, (0, 0))  # Muestra la imagen de Game Over
+            if AInt < 1 and VInt < 1 and JInt < 1 and EInt < 1 and OInt < 1 and Timecounter == 0 or Life == 0:
+                Status = "Lose"
                 pygame.display.flip()
-                pygame.time.wait(3000)  # Esperar 3 segundos antes de salir
-                menu.Menu_Run()
             elif AInt >= 1 and VInt >= 1 and JInt >= 1 and EInt >= 1 and OInt >= 1:
-                screen.blit(win_image, (0, 0))  # Muestra la imagen de Game Over
+                Status = "Winner"
                 screen.blit(Letra_V, (470, 30))
                 screen.blit(Letra_O, (440, 30))
                 screen.blit(Letra_E, (500, 30))
                 screen.blit(Letra_J, (530, 30))
                 screen.blit(Letra_A, (560, 30))
                 pygame.display.flip()
-                pygame.time.wait(3000)  # Esperar 3 segundos antes de salir
-                menu.Menu_Run()
+
             
             
 
@@ -346,11 +355,11 @@ def run_game():
 
             
             if Life >= 3:
-                screen.blit(Heart_Image, (72, 70))
+                screen.blit(Heart_Image, (112, 50))
             if Life >= 2:
-                screen.blit(Heart_Image, (134, 70))
+                screen.blit(Heart_Image, (174, 50))
             if Life >= 1:
-                screen.blit(Heart_Image, (196, 70))
+                screen.blit(Heart_Image, (236, 50))
 
 
 
@@ -381,31 +390,70 @@ def run_game():
 
             # Mostrar puntaje y tiempo
     
-            score_surface = font.render(f'A: {AInt:}, V: {VInt}, J: {JInt}, O: {OInt}, E: {EInt}', True, (255, 255, 255))
+            #score_surface = font.render(f'A: {AInt:}, V: {VInt}, J: {JInt}, O: {OInt}, E: {EInt}', True, (255, 255, 255))
             time_surface = font.render(f'Time: 0:{int(Timecounter):02d}', True, (255, 255, 255))
-            screen.blit(score_surface, (100, 30))  # Ajustar posición de puntaje
+            #screen.blit(score_surface, (100, 30))  # Ajustar posición de puntaje
             screen.blit(time_surface, (850, 20))   # Ajustar posición de tiempo
 
-            if PauseValue == False:
+
+
+            if PauseValue == False and not Status == "Winner" or not Status == "Lose":
                 Pause_Button = pygame.Rect(30, 30, 70, 70)
                 pygame.draw.rect(screen, CAFE, Pause_Button, border_radius=15)
                 screen.blit(pygame.transform.scale(pygame.image.load("imagenes/Pause button.png"), (70, 70)), (30, 30))
             else:
+                pass
+            if PauseValue == True:
                 Pause_Button = pygame.Rect(30, 30, 70, 70)
                 screen.blit(pygame.transform.scale(pygame.image.load("imagenes/BotonEnPause.png"), (70, 70)), (30, 30))
 
+            if Status == "Winner" or Status == "Lose" or PauseValue == True:
+                    if Status == "Winner" or Status == "Lose":
+                        RepeatLevel = pygame.Rect(350, 300, 300, 50)
+                        pygame.draw.rect(screen, CAFE, RepeatLevel, border_radius=15)
+                        if Language == "English":
+                            draw_text('REPEAT LEVEL', font_8bit, (255, 255, 255), screen, 500, 325)
+                        else:
+                            draw_text('REPETIR NIVEL', font_8bit, (255, 255, 255), screen, 500, 325)
+                    
+                    if PauseValue == True:
+                        ResumeButton = pygame.Rect(350, 300, 300, 50)
+                        pygame.draw.rect(screen, CAFE, ResumeButton, border_radius=15)
+                        if Language == "English":
+                            draw_text('RESUME', font_8bit, (255, 255, 255), screen, 500, 325)
+                        else:
+                            draw_text('RENUDAR', font_8bit, (255, 255, 255), screen, 500, 325)
+
+                    BackMenu = pygame.Rect(350, 400, 300, 50)
+                    pygame.draw.rect(screen, CAFE, BackMenu, border_radius=15)
+                    if Language == "English":
+                        draw_text('BACK TO MENU', font_8bit, (255, 255, 255), screen, 500, 425)
+                    else:
+                        draw_text('REGRESAR AL NIVEL', font_8bit, (255, 255, 255), screen, 500, 425)
+
             for event in pygame.event.get():
-            
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    if Status == "Winner" or Status == "Lose" or PauseValue == True:
+                        if Status == "Winner" or Status == "Lose":
+                            if RepeatLevel.collidepoint(event.pos):
+                                if Character == "Female":
+                                    run_game(ScreenStatus="Game", CharacterChoosen="Female", LanguageSelected=Language)
+                                if Character == "Male":
+                                    run_game(ScreenStatus="Game", CharacterChoosen="Male", LanguageSelected=Language)
+                        if BackMenu.collidepoint(event.pos):
+                                menu.Menu_Run(LanguageSelected=Language)
+
+                        if ResumeButton.collidepoint(event.pos):
+                            PauseValue = False
                     if Pause_Button.collidepoint(event.pos):
                         PauseValue = not PauseValue
+
+                    
 
         # Mostrar imagen de resultado
 
             
             pygame.display.flip()
             pygame.time.Clock().tick(60)
-
-  

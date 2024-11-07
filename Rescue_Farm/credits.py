@@ -70,7 +70,7 @@ def creditsWall():
         draw_text('Maximiliano Martinez Gomez', font_8bit, (255, 255, 255), screen, 1000 // 2, Altura12)
 
         
-
+        
 
     
 

@@ -2,7 +2,7 @@ import pygame, sys, Nivel1, credits
 # Inicializar Pygame
 
 # Tamaño de pantalla
-def Menu_Run():
+def Menu_Run(LanguageSelected):
     pygame.init()
     screen_width, screen_height = 1000, 600
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -49,7 +49,7 @@ def Menu_Run():
     MENU = "menu"
     Credits = "credits"
     LEVEL = "level"
-    Language = "Spanish"
+    Language = LanguageSelected
     state = MENU
 
     # Botones
@@ -201,10 +201,7 @@ def Menu_Run():
                     if level1_button.collidepoint(event.pos):
                         button_click_sound.play()
                         print(f"Nivel 1 seleccionado en dificultad {difficulty}")
-                        Nivel1.run_game()  # Ejecuta el juego principal al seleccionar el nivel 1
-                        pygame.quit()    # Cierra el menú después de iniciar el juego
-                        sys.exit()
-
+                        Nivel1.run_game(ScreenStatus="Characters", CharacterChoosen="Male", LanguageSelected=Language) 
                     elif level2_button.collidepoint(event.pos):
                         button_click_sound.play()
                         print(f"Nivel 2 seleccionado en dificultad {difficulty}")
@@ -219,4 +216,4 @@ def Menu_Run():
         pygame.display.flip()
         pygame.time.Clock().tick(60)
 
-Menu_Run()
+Menu_Run(LanguageSelected="Spanish")
