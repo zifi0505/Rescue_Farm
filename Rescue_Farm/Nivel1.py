@@ -1,8 +1,4 @@
 import pygame, sys, menu, random
-from pyvidplayer import Video
-
-video = Video("Videos/FARM RESCUE.mp4")
-video.set_size((640, 480))
 
 pygame.quit()
 
@@ -17,8 +13,8 @@ def run_game(ScreenStatus, CharacterChoosen, LanguageSelected):
 
     # Cargar imágenes
     Mapa_Nivel1 = pygame.image.load("imagenes/Livel1Map.png")
-    Player_male = pygame.transform.scale(pygame.image.load("personajes/Boy.2.png"), (70, 70))
-    Player_Female = pygame.transform.scale(pygame.image.load("personajes/1WOMAN.png"), (70, 70))
+    Player_male = pygame.transform.scale(pygame.image.load("imagenes/niñoParado.png"), (100, 100))
+    Player_Female = pygame.transform.scale(pygame.image.load("imagenes/niña.png"), (100, 100))
     Oveja_image = pygame.image.load("imagenes/animales/Oveja.png")
 
     LetrasEscala_X = 32
@@ -63,7 +59,7 @@ def run_game(ScreenStatus, CharacterChoosen, LanguageSelected):
 
     
 
-    farmer_image = pygame.image.load("imagenes/Granjero (2).png")
+    farmer_image = pygame.transform.scale(pygame.image.load("imagenes/granjeroParado.png"),(80,80))
     game_over_image = pygame.image.load("imagenes/Perder 8.png")
     win_image = pygame.image.load("imagenes/Ganar 8.png")  # Cargar la imagen de ganar
     Heart_Image = pygame.transform.scale(pygame.image.load("imagenes/CorazonDeVida.png"), (40, 40))
@@ -163,9 +159,9 @@ def run_game(ScreenStatus, CharacterChoosen, LanguageSelected):
             else:
                 pygame.draw.rect(screen, (63, 31, 8), FemaleCharacterButton, border_radius=15)
 
-            screen.blit(pygame.transform.scale(pygame.image.load("personajes/1WOMAN.png"), (100, 100)), (550, 250))
+            screen.blit(pygame.transform.scale(pygame.image.load("imagenes/niña.png"), (100, 100)), (550, 250))
 
-            screen.blit(pygame.transform.scale(pygame.image.load("personajes/Boy.2.png"), (100, 100)), (375, 250))
+            screen.blit(pygame.transform.scale(pygame.image.load("imagenes/niñoParado.png"), (100, 100)), (375, 250))
 
             screen.blit(back_button_image, (25, 500))
 
@@ -396,7 +392,6 @@ def run_game(ScreenStatus, CharacterChoosen, LanguageSelected):
             screen.blit(time_surface, (850, 20))   # Ajustar posición de tiempo
 
 
-
             if PauseValue == False and not Status == "Winner" or not Status == "Lose":
                 Pause_Button = pygame.Rect(30, 30, 70, 70)
                 pygame.draw.rect(screen, CAFE, Pause_Button, border_radius=15)
@@ -405,7 +400,7 @@ def run_game(ScreenStatus, CharacterChoosen, LanguageSelected):
                 pass
             if PauseValue == True:
                 Pause_Button = pygame.Rect(30, 30, 70, 70)
-                screen.blit(pygame.transform.scale(pygame.image.load("imagenes/BotonEnPause.png"), (70, 70)), (30, 30))
+                screen.blit(pygame.transform.scale(pygame.image.load("imagenes/BotonEnPause.png"), (70, 70)), (30, 30))  
 
             if Status == "Winner" or Status == "Lose" or PauseValue == True:
                     if Status == "Winner" or Status == "Lose":

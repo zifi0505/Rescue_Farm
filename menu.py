@@ -1,8 +1,9 @@
-import pygame, sys, Nivel1
+import pygame, sys, Nivel1  
 # Inicializar Pygame
 
 # Tamaño de pantalla
 def Menu_Run():
+    
     pygame.init()
     screen_width, screen_height = 1000, 600
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -20,7 +21,7 @@ def Menu_Run():
     font_8bit = pygame.font.Font("fuentes/PressStart2P-Regular.ttf", 30)
 
     #icono
-    icono = pygame.image.load("imagenes/icono.jpeg")
+    icono = pygame.image.load("imagenes/icono.jpeg")    
     pygame.display.set_icon(icono)
 
     # Cargar la imagen del fondo
