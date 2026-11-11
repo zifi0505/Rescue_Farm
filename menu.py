@@ -1,4 +1,4 @@
-import pygame, sys, Nivel1  
+import pygame, sys, Nivel1
 # Inicializar Pygame
 
 # Tamaño de pantalla
@@ -194,7 +194,7 @@ def Menu_Run():
                     if level1_button.collidepoint(event.pos):
                         button_click_sound.play()
                         print(f"Nivel 1 seleccionado en dificultad {difficulty}")
-                        Nivel1.run_game()  # Ejecuta el juego principal al seleccionar el nivel 1
+                        Nivel1.run_game()
                         pygame.quit()    # Cierra el menú después de iniciar el juego
                         sys.exit()
                     elif level2_button.collidepoint(event.pos):
